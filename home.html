@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="bootstrap.min.css">
+<link rel="stylesheet" href="mafia.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="bootstrap.min.js"></script>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Mafia God Tool</title>
+</head>
+
+<div id = "body">
+<div id = "main" >
+
+	<div id = "askNumberPlayers">
+		<h4>Welcome to Mafia God Tool v0.10</h4>
+		<form>
+			Number of Players: <input type="text" id="numberOfP"><br>
+			<button type = "button" class = "nextButtons">Next</button>
+		</form>
+	</div>
+
+	<div id = "askPlayerNames" class = "hidden">
+		<h4>Enter the names of all the players:</h4>
+		<form>
+			<button type = "button" class = "backButtons">Back</button>
+			<button type = "button" class = "nextButtons">Next</button>
+		</form>
+	</div>
+
+	<div id = "selectRoles" class = "hidden">
+		<h4>Pick the characters you want to play with</h4>
+
+		<form>
+
+			<label for="vampire">Vampire</label>
+			<input type = "checkbox" id = "vampire" value = "Vampire"><br>
+
+			<label for="werewolf">Werewolf</label>
+			<input type = "checkbox" id = "werewolf" value = "Werewolf"><br>
+
+			<label for="bella">Bella</label>
+			<input type = "checkbox" id = "bella" value = "Bella"><br>
+
+			<label for="detective">Detective</label>
+			<input type = "checkbox" id = "detective" value = "Detective"><br>
+
+			<label for="batman">Batman</label>
+			<input type = "checkbox" id = "batman" value = "Batman"><br>
+
+			<label for="bieber">Bieber</label>
+			<input type = "checkbox" id = "bieber" value = "Bieber"><br>
+
+			<label for="doctor">Doctor</label>
+			<input type = "checkbox" id = "doctor" value = "Doctor"><br>
+
+			<label for="sue">Sue</label>
+			<input type = "checkbox" id = "sue" value = "Sue"><br>
+
+			<label for="kirby">Kirby</label>
+			<input type = "checkbox" id = "kirby" value = "Kirby"><br>
+
+			<label for="luke">Luke</label>
+			<input type = "checkbox" id = "luke" value = "Luke"><br>
+
+			<label for="leia">Leia</label>
+			<input type = "checkbox" id = "leia" value = "Leia"><br>
+
+			<label for="littlefinger">Littlefinger</label>
+			<input type = "checkbox" id = "littlefinger" value = "Littlefinger"><br>
+
+		<br>
+		<button type = "button" class = "backButtons">Back</button>
+		<button type = "button" class = "nextButtons">Next</button>
+		</form>
+	</div>
+
+	<div id = "assignRoles" class = "hidden">
+		<h4>Distribute the cards as follows:</h4>
+		<form>
+
+		<br>
+		<button type = "button" class = "backButtons">Back</button>
+		<button type = "button" class = "nightButtons">Start the Night</button>
+		</form>
+	</div>
+
+	<div id = "day" class = "hidden">
+		<h4>Vote to kill someone</h4>
+
+		<div id = 'dayActions'>
+		</div>
+		<form>
+
+		<br>
+
+		<button type = "button" class = "nightButtons">Start the Night</button>
+		</form>
+	</div>
+
+	<div id = "night" class = "hidden", "night">
+		<h4>Take actions in the following order</h4>
+			<div id = "actions">
+				
+			</div>
+
+		<form>
+
+		<br>
+
+		<button type = "button" class = "dayButtons">Start the day</button>
+		</form>
+	</div>
+
+</div>
+
+	<div id = 'log'>
+		<h4>Game Log</h4>
+	</div>
+</div>
+
+<script src="jquery.js"></script>
+<script src="mafiaApp.js"></script>
+</html>
+
