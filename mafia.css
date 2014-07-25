@@ -1,3 +1,5 @@
+
+
 #body {
   width: 80% ;
   margin-top: 50px;
@@ -5,19 +7,16 @@
   margin-right: auto ;
 }
 
-
-#main {
-  width: 50% ;
-  margin-left: px ;
-  margin-right: auto ;
-  float: left;
+/* Tablet Landscape */
+@media screen and (max-width: 3060px) {
+    #main { width:45%;   float: left; margin-left:auto;margin-right:auto;}
+    #log { width:45%;   float: right; margin-left:auto;margin-right:auto;}  
 }
 
-#log {
-  width: 50% ;
-  margin-left: auto ;
-  margin-right: auto ;
-  float: left;
+/* Tabled Portrait */
+@media screen and (max-width: 768px) {
+    #main { width:100%; }
+    #log { width:100%; margin:0; }
 }
 
 h4{
@@ -28,7 +27,9 @@ h5{
   margin-left:-15px;
 }
 
-
+.description{
+  width:80%;
+}
 
 #selectRoles{
   line-height: 200%;
@@ -49,8 +50,19 @@ h5{
     vertical-align:middle; 
 }
 
-#currentRoles {
-  margin-top: 30px;
+#actions input[type="checkbox"]{
+    position:relative;
+    vertical-align:middle; 
+    margin:0;
+
+}
+
+#actions label{  
+  width:150px;
+  margin: 0;
+    position:relative;
+    display:inline-block;    
+    vertical-align:middle; 
 }
 
 .hidden {

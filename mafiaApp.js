@@ -1,34 +1,50 @@
-//Flow
-//1.Get number of players
-//2.Get player names
-//3.Select playable role cards
-//4.Randomly distribute role card to players
-//5.Start night/day cycle until winning criteria is met
+/******
+Flow
+1.Get number of players
+2.Get player names
+3.Select playable role cards
+4.Randomly distribute role card to players
+5.Start night/day cycle until winning criteria is met
+******/
 
-//Todo
+/******
+Todo
 
-//implement function for back buttons
+- implement function for back buttons
 
-//validation for all inputs
+- validation for all inputs
+	step 5 - action selection - remove self selection for Bella, Batman
 
-	//step 2 - player names must not be undefined, and must not repeat
-	//step 3 - Multiple validations
-	//		 - Must select at least 1 werewolf or 1 vampire
-	//		 - number of selection must equal to number of players
-	//		 - If Luke is selected, Leia must be selected, and vice versa
-	//step 5 - action selection - remove self selection for Bella, Batman
-	//step 5 - add drop menu for no action
+- write useful console.log functions for debugging
+- add an additional screen for options, ie, can doctor overdose, can werewolf mafia convert, and if so, how many
+- add regular civilians and the ability to add multiple of them
+- add sue action
+- describe character roles and general game rule
+- modify the player role assignment in game log as it progresses
+- set game over conditions and logic for selecting winner
+- button for testing
+- correct detective checking: cannot select first option to see if they are villain
+- add css for paragraph description
+- add animation for game log
+- add header
+- add footer
+- add css for warnings
+******/
 
-//write useful console.log functions for debugging
-//add an additional screen for options, ie, can doctor overdose, can werewolf mafia convert, and if so, how many
-
-
-//add kirby action
-//add sue action
-//change player role assignment to table instead of list
-//modify the player role assignment in game log as it progresses
-//set game over conditions and logic for selecting winner
-//button for testing
+/******
+Finished Tasks
+- added basic description for each role
+- made css more responsive
+- If Luke is selected, Leia must be selected, and vice versa
+- When Luke dies, so does Leia, and vice versa
+- correct doctor overdose issue
+- change player role assignment to table instead of list
+- added kirby actions
+- added validation for player name (null and repeats)
+- validation for number of roles must equal to number of players
+- Must select at least 1 werewolf or 1 vampire
+- Werevampire kill batman/bieber even if there are rooms for conversion
+*******/
 
 //********Variables*******//
 
@@ -41,6 +57,7 @@ var Rolecard = function(name, nightOrder, nightMessage){
 
 //set default values using prototype
 Rolecard.prototype.playerName = '';
+Rolecard.prototype.takeAction = function(){return ''};
 Rolecard.prototype.target = function(array){
 								return createDropdown(this.name,this.nightMessage, array);		
 							};
@@ -48,9 +65,7 @@ Rolecard.prototype.getTarget = function(){
 									var dropdownID = "#dropdown"+this.name+ " option:selected";
 									return $(dropdownID).text();
 								},
-Rolecard.prototype.action = function(){
-
-							};
+Rolecard.prototype.action = function(){};
 Rolecard.prototype.werewolf = false;
 Rolecard.prototype.vampire = false;
 Rolecard.prototype.bella = false;
@@ -67,33 +82,33 @@ Rolecard.prototype.resetStatus = function(){
 									}
 								};
 //logic for vampire/werewolf bites
-Rolecard.prototype.bite = function(array, booleanFunc, addFunc, target){					
+Rolecard.prototype.bite = function(array, booleanFunc, convFunc, target){					
 							//find location of target in array
 								var index = searchTarget(target, array)								
 								var obj = array[index];
 							
 							//check to see if the person is doctored or bella or is already vampire/werewolf
-								if (obj.bella == true || obj.doctored == true || obj[this.name.toLowerCase()] == true){	
+								if (obj.bella === true || obj.doctored === true || obj[this.name.toLowerCase()] === true){	
 								gamelog(this.name+ ' tried to bite ' + obj.playerName + ' but was not able to');				
 								}
 							//convert or kill target
-								else if(booleanFunc()){
+								else if(booleanFunc() || obj.name === 'Bieber' || obj.name === 'Batman'){
 									obj.toBeRemoved = true;
 									gamelog(this.name+ ' killed ' + obj.playerName + '.');	
 								}
 								else{
 									obj[this.name.toLowerCase()] = true;
 									gamelog(this.name+ ' converted ' + obj.playerName + '.');	
-									addFunc();
+									convFunc();
 								};
 							//check to see if target is bella
-								if (obj.name == 'Bella'){
+								if (obj.name === 'Bella'){
 									var bellaIndex = searchTarget(obj.sleptWith, array);
 									var bellaObj = array[bellaIndex];
 									gamelog(this.name+ ' found ' + obj.playerName + ' in bed with ' + bellaObj.playerName+'.');	
 									//make the player killable
 									bellaObj.bella = false;						
-									this.bite(array, booleanFunc, addFunc,bellaObj.playerName);
+									this.bite(array, booleanFunc, convFunc,bellaObj.playerName);
 								}
 
 							};
@@ -104,14 +119,14 @@ Rolecard.prototype.kill = function(array, booleanReveal){
 								var index = searchTarget(target, array)							
 								var obj = array[index];
 							//check to see if the person is doctored or bella or is the player himself
-								if (obj.bella == true || obj.doctored == true || obj.playerName == this.playerName){	
+								if (obj.bella === true || obj.doctored === true || obj.playerName === this.playerName){	
 								gamelog(this.name+ ' tried to kill ' + obj.playerName + ' but was not able to');				
 								}
 							//kill target
 								else{
 									obj.toBeRemoved = true;
 									gamelog(this.name + ' killed ' + obj.playerName + '.');	
-									if(booleanReveal == true){obj.toBeRevealed = true;
+									if(booleanReveal === true){obj.toBeRevealed = true;
 									gamelog(this.name + ' revealed ' + obj.playerName + ' to be the ' + obj.name);	
 									};
 								};
@@ -184,7 +199,14 @@ vampireCard.vampire = true;
 vampireCard.target = function(array){return ''};
 
 var batmanCard = new Rolecard('Batman', 7, "Who would you like to kill?");
-batmanCard.action = function(array){this.kill(array, true)};
+batmanCard.takeAction = function(){
+			return "<div><label for="+this.name+"'Action'>"+this.name+" take action?</label><input type = 'checkbox' id = "+this.name.toLowerCase()+"Action></div>"
+};
+batmanCard.action = function(array){
+	console.log($("#batmanAction").prop('checked'));
+	if(!$("#batmanAction").prop('checked')){gamelog('Batman did not kill anyone.')}
+	else{this.kill(array, true)};
+};
 
 //declare the role cards that do not have night actions, return nothing when prompted for night action
 
@@ -194,16 +216,38 @@ bieberCard.target = function(array){return ''};
 var sueCard = new Rolecard('Sue', 99, '');
 sueCard.target = function(array){return ''};
 
-var kirbyCard = new Rolecard('Kirby', 99, '');
+var kirbyCard = new Rolecard('Kirby', 1, '');
+kirbyCard.takeAction = function(){
+			return "<div><label for="+this.name+"'Action'>"+this.name+" take action?</label><input type = 'checkbox' id = "+this.name.toLowerCase()+"Action></div>"
+}
 kirbyCard.target = function(array){return ''};
+kirbyCard.action = function(array){
+	console.log($("#kirbyAction").prop('checked'));
+
+	if(!$("#kirbyAction").prop('checked')){gamelog("Kirby did not take anyone's role.")}
+
+	//if kirby is taking his action, pull a random role out of the detactived role array and replace it with kirby's
+
+	else{
+		var currentPosition = searchTarget(this.playerName, array);
+		var random = Math.floor(Math.random()*deactiveRoles.length);
+		var replaceThis;
+		var replaceWith = deactiveRoles[random];
+		gamelog("Kirby took on "+replaceWith.name+"'s role.")
+		replaceWith.playerName = this.playerName;
+		array.splice(currentPosition,1);
+		array.push(replaceWith);
+	};
+};
+
 
 var littlefingerCard = new Rolecard('Littlefinger', 99, '');
 littlefingerCard.target = function(array){return '';};
 
-var lukeCard = new Rolecard('Luke', 1, '');
+var lukeCard = new Rolecard('Luke', 0, '');
 lukeCard.target = function(array){return ''};
 
-var leiaCard = new Rolecard('Leia', 1, '');
+var leiaCard = new Rolecard('Leia', 0, '');
 leiaCard.target = function(array){return ''};
 
 var roleCards = [];
@@ -224,6 +268,7 @@ var nightCount = 0;
 var dayCount = 0;
 var gameover = false;
 var winner =[];
+var sueAction = false;
 
 
 //*******Listeners*******//
@@ -256,13 +301,45 @@ $("#askNumberPlayers .nextButtons").on('click', function(){
 
 //Input name of players #askPlayerNames
 
+$("#askPlayerNames .backButtons").on('click', function(){
+
+		$("#askPlayerNames form").children('div').remove();
+		$("#askNumberPlayers").removeClass("hidden");
+		$("#askPlayerNames").addClass("hidden");
+
+})
+
+
 $("#askPlayerNames .nextButtons").on('click', function(){
-	$("#askPlayerNames").addClass("hidden");
+	$(".warning").remove();
 	playerNames = getNames();
-	$("#selectRoles").removeClass("hidden");
+	var validationNullResult = validateNullNames(playerNames);
+	var validationRepeatResult = validateRepeatNames(playerNames);
+	var nullPlayerId = 'player'+validationNullResult;
+	var repeatPlayerId = 'player'+validationRepeatResult;
+
+	if(validationNullResult===true && validationRepeatResult===true){
+		$("#askPlayerNames").addClass("hidden");
+		$("#selectRoles").removeClass("hidden");}
+	else if (validationNullResult!==true){
+		$('#'+nullPlayerId).parent().append(warning(nullPlayerId + " does not have a name!"));
+		$('#'+nullPlayerId).focus();
+	}
+	else{
+		$('#'+repeatPlayerId).parent().append(warning(repeatPlayerId + "'s name has already been entered!"));
+		$('#'+repeatPlayerId).focus();
+	}
 })
 
 //listeners for adding/removing roles
+
+$("#selectRoles .backButtons").on('click', function(){
+
+		$("#askPlayerNames").removeClass("hidden");
+		$("#selectRoles").addClass("hidden");
+
+})
+
 
 $("#selectRoles").on('click', 'input', function(){
 		
@@ -275,18 +352,30 @@ $("#selectRoles").on('click', 'input', function(){
 	rolesRefresh(roles);
 })
 
-//select roles #selectRoles
+//select roles
 
 $("#selectRoles .nextButtons").on('click', function(){
-	$("#selectRoles").addClass("hidden");
-	$("#assignRoles").removeClass("hidden");
-	//randomly assign roles to players #assignRoles
-	activeRoles = mapObjects(playerNames, randomArray(roles));
-	refreshSharedArray(sharedRoles, activeRoles);
-	//post assignment to page
-	$("#assignRoles form").prepend(playerRoleList(activeRoles));
-	//post assignment to page
-	activeRoles = sortObjArray(activeRoles);
+	$(".warning").remove();
+	if(validateRoleLengths(roles, playerNames)&&validateRoleVillain(roles)&&validateLukeLeia(roles)){
+		//randomly assign roles to players #assignRoles
+		activeRoles = mapObjects(playerNames, randomArray(roles));
+		refreshSharedArray(sharedRoles, activeRoles);
+		//post assignment to page
+		$("#assignRoles form").prepend(playerRoleList(activeRoles));
+		//post assignment to page
+		activeRoles = sortObjArray(activeRoles);
+		$("#selectRoles").addClass("hidden");
+		$("#assignRoles").removeClass("hidden");
+	}
+	else if(!validateRoleLengths(roles, playerNames)){
+		$(this).parent().append(warning('Number of players does not match number of roles!'));
+	}
+	else if(!validateRoleVillain(roles)){
+		$(this).parent().append(warning('Please include either a werewolf or a vampire in your selection'));
+	}
+	else{
+		$(this).parent().append(warning('You have to include both Luke or Leia or neither of them.'));		
+	}
 })
 
 //Start the night
@@ -304,6 +393,7 @@ $("#assignRoles .nightButtons").on('click', function(){
 	nightTime();
 	$("#night #actions").append(loopCreateDropdown(activeRoles,activeRoles));
 	$("#night #actions").append(loopCreateDropdown(sharedRoles,activeRoles));
+	$("#dropdownBatman").parent().addClass('hidden');
 })
 
 //create listener for detective
@@ -321,12 +411,21 @@ $("#actions").on('change',"#dropdownDetective",function(){
 	};
 })
 
+//listener for batman
+$("#actions").on('click', "#batmanAction", function(){
+		
+	if($(this).prop('checked')){
+		$("#dropdownBatman").parent().removeClass('hidden');
+	}
+	else{
+		$("#dropdownBatman").parent().addClass('hidden');
+	};
+})
 
 //Cycle through day and nights
 $("#night .dayButtons").on('click', function(){
 	//switch between night and day divs
-	$("#night").addClass("hidden");
-	$("#day").removeClass("hidden");
+
 	//For each role with action, assign target and execute logic for their actions
 
 	executeActions(activeRoles,activeRoles);
@@ -338,6 +437,11 @@ $("#night .dayButtons").on('click', function(){
 	//refresh the day actions with the latest active players
 	$("#dayActions").children("div").remove();
 	$("#dayActions").append(loopCreateDropdown(daytimeRoles,activeRoles));
+	$("#dropdownBatman").parent().addClass('hidden');
+
+	//switch between night and day divs
+	$("#night").addClass("hidden");
+	$("#day").removeClass("hidden");
 
 })
 
@@ -359,12 +463,12 @@ $("#day .nightButtons").on('click', function(){
 	$("#actions").children("div").remove();
 	$("#actions").append(loopCreateDropdown(activeRoles,activeRoles));
 	$("#actions").append(loopCreateDropdown(sharedRoles,activeRoles));
+	$("#dropdownBatman").parent().addClass('hidden');
 })
 
 
 
 //*****Functions*******//
-//function that updates the current list of roles
 
 var markup = function(string, tag, id){
 	if(!id){ id =''}
@@ -401,11 +505,9 @@ var rolesRefresh = function(rolesArray){
 		}
 	});
 
-	results = markup("<p>You are currently playing with the following characters</p> " + results + "<br>", "div", "currentRoles");
+	results = markup("<p>You are currently playing with the following "+ rolesArray.length +" characters</p> " + results + "<br>", "div", "currentRoles");
 
-
-	//remove the comma in front
-	$("#selectRoles form").append(results);
+	$("#log").append(results);
 
 }
 
@@ -450,7 +552,8 @@ var mapObjects = function(playerNames, roles){
 	return activeRoles;
 }
 
-//A function that takes in the role name and return the object with the matching role name
+//A function that takes in the role name
+//returns the object with the matching role name
 
 var searchRole = function(role, array){
 
@@ -466,11 +569,8 @@ var searchRole = function(role, array){
 	return result;
 }
 
-//Add shared roles after the playable roles are selected
-
-
-
-//A function that takes in the player name, usually the target of player actions, and return the position
+//A function that takes in the player name
+//usually the target of player actions, and return the position
 
 var searchTarget = function(target, array){
 
@@ -482,7 +582,8 @@ var searchTarget = function(target, array){
 	return -1;
 }
 
-//A function that refreshes the public role array depending on the active roles array
+//A function that refreshes the public role array
+//depending on the active roles array
 
 var refreshSharedArray = function(sharedArray, activeArray){
 	//clear input array
@@ -515,15 +616,15 @@ var randomArray = function(cardArray){
 	return result;
 }
 
-//print out each elements of our 2 arrays in list form
+//print out each elements of our 2 arrays in table form
 var playerRoleList = function(array){
 	var result = '';
 
 	forEach(array, function(element){
-		result = result + "<li>" + element.playerName + " : " + element.name + "</li>";
+		result = result + "<tr><td>" + element.playerName + "</td><td>" + element.name + "</td></tr>";
 	});
 
-	result = "<div><ul>"+result+"</ul></div>"
+	result = "<div><table><tr><th>Player Names</th><th>Roles</th></tr>"+result+"</table></div>"
 
 	return result;
 }
@@ -578,7 +679,7 @@ var loopCreateDropdown = function(objArray, targetArray){
 	var result = '';
 
 	forEach(objArray, function(element){
-		result = result + element.target(targetArray);
+		result = result + element.takeAction() + element.target(targetArray);
 	});
 
 	return "<div>" + result; + "</div>"
@@ -660,15 +761,20 @@ var resetActiveRoles = function(array){
 	console.log("Resetting active roles to their original state and removing all dead players.");
 	for(var i = 0; i < array.length; i++){
 
+		if(nightCount > dayCount) array[i].resetStatus();
+
+		if(array[i].name == 'Luke' && array[i].toBeRemoved == true) {searchRole('Leia', array).toBeRemoved = true};
+
+		if(array[i].name == 'Leia' && array[i].toBeRemoved == true) {searchRole('Luke', array).toBeRemoved = true};
+
 		if(array[i].toBeRemoved == true){
+			if(array[i].name == 'Sue'){sueAction = true};
 			gamelogAnnounce(array[i].playerName +  " died.");
 			deactiveRoles.push(array[i]);
 			array.splice(i,1);
 			i--;
-		}
-		else{
-			array[i].resetStatus();
-		}
+		};
+
 	}
 }
 
@@ -689,17 +795,60 @@ var validateNumberPlayers = function(number){
 }
 
 
-//make sure playernames not null, returns an index of the first one with null inputs, otherwise returns true
-var validatePlayerNames = function(array){
+//make sure playernames not null
+//returns an index of the first one with null inputs, otherwise returns true
+var validateNullNames = function(array){
 	var result = true;
-	var tester;
 	var i = 0;
-
-
-
+	forEach(array, function(element){
+		i++;
+		if(element == ''){
+			result = i;
+			console.log(result);
+		}
+	})
+	console.log(result);
+	return result;
 }
 
-//make sure playernames do not repeat, returns an array with index of all repeating names
-var validatePlayerNames = function(array){
-
+//make sure playernames do not repeat
+//returns an array with index of all repeating names
+var validateRepeatNames = function(array){
+	var copyArray = array.slice(0);
+	var result = true;
+	var i = 0;
+	while(copyArray.length>0){
+		var tester = copyArray[0];
+		copyArray.splice(0,1);
+		i++;
+		forEach(copyArray, function(element){
+			if(tester==element){
+				result = i;
+			}
+		});
+	}
+	return result;
 }
+
+var validateRoleLengths = function(roleArray, playerArray){
+	if(roleArray.length == playerArray.length){
+		return true;
+	}
+	return false;
+}
+
+var validateRoleVillain = function(roleArray){
+	return isIn('Werewolf', roleArray) || isIn('Vampire', roleArray);
+}
+
+var validateLukeLeia = function(roleArray){
+	if(isIn('Luke', roleArray)){
+		return isIn('Leia', roleArray)
+	};
+	if(isIn('Leia', roleArray)){
+		return isIn('Luke', roleArray)
+	};
+	return true;
+}
+
+
