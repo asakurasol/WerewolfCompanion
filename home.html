@@ -10,149 +10,172 @@
 
 <head>
     <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="HandheldFriendly" content="true">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="HandheldFriendly" content="true">
     <title>Mafia God Tool</title>
 </head>
 
-<div id = "body">
-<div id = "main" >
+<body>
+	<div id = "content" class="body_wrap">
+	<div id = "main" >
 
-	<div id = "askNumberPlayers">
-		<h4>Welcome to Mafia God Tool v0.10</h4>
-		<form>
-			Number of Players: <input type="text" id="numberOfP"><br>
-			<button type = "button" class = "nextButtons">Next</button>
-		</form>
-	</div>
-
-	<div id = "askPlayerNames" class = "hidden">
-		<h4>Enter the names of all the players:</h4>
-		<form>
-			<button type = "button" class = "backButtons">Back</button>
-			<button type = "button" class = "nextButtons">Next</button>
-		</form>
-	</div>
-
-	<div id = "selectRoles" class = "hidden">
-		<h4>Pick the characters you want to play with</h4>
-
-		<form>
-
-			<label for="vampire">Vampire</label>
-			<input type = "checkbox" id = "vampire" value = "Vampire"><br>
-			<p class = "description">A moody villain that glitters under the sun. Bites other players to convert them to vampires or kill them at night</p>
-
-			<label for="werewolf">Werewolf</label>
-			<input type = "checkbox" id = "werewolf" value = "Werewolf"><br>
-			<p class = "description">A lonely villain that's half naked most of the time. Bites other players to convert them to werewolves or kill them at night</p>
-
-			<label for="bella">Bella</label>
-			<input type = "checkbox" id = "bella" value = "Bella"><br>
-			<p class = "description">Bella chooses a player to sleep with her at night. that player cannot be targetted by villains and batman, but villains would bite both Bella and her guest if they pay a visit to Bella.</p>
-
-			<label for="detective">Detective</label>
-			<input type = "checkbox" id = "detective" value = "Detective"><br>
-			<p class = "description">Detective chooses someone at night to check whether or not the target is a villain.</p>
-
-			<label for="batman">Batman</label>
-			<input type = "checkbox" id = "batman" value = "Batman"><br>
-			<p class = "description">Batman tries to kill someone at night. if batman succeeds, that person's role is also revealed. </p>
-
-			<label for="bieber">Bieber</label>
-			<input type = "checkbox" id = "bieber" value = "Bieber"><br>
-			<p class = "description">If Bieber is voted to death, bieber wins the game. </p>
-
-			<label for="doctor">Doctor</label>
-			<input type = "checkbox" id = "doctor" value = "Doctor"><br>
-			<p class = "description">Doctor can inject someone with medicine at night to prevent them being bitten by vampire or werewolf. However, if the good doctor injects someone two nights in a row, that person dies of overdose. </p>
-			
-			<label for="sue">Sue</label>
-			<input type = "checkbox" id = "sue" value = "Sue"><br>
-			<p class = "description">Sue is an angry person. If Sue dies, she kills someone. </p>
-
-			<label for="kirby">Kirby</label>
-			<input type = "checkbox" id = "kirby" value = "Kirby"><br>
-			<p class = "description">Kirby has the option at night to randomly change into a role of a dead person.</p>
-
-			<label for="luke">Luke</label>
-			<input type = "checkbox" id = "luke" value = "Luke"><br>
-			<p class = "description">Luke and Leia are sibling lovers. When one dies, so does the other.</p>
-
-			<label for="leia">Leia</label>
-			<input type = "checkbox" id = "leia" value = "Leia"><br>
-			<p class = "description">Luke and Leia are sibling lovers. When one dies, so does the other.</p>
-
-			<label for="littlefinger">Littlefinger</label>
-			<input type = "checkbox" id = "littlefinger" value = "Littlefinger"><br>
-			<p class = "description">Littlefinger is on the same side of the villains, but the villains don't know that.</p>
-
-		<br>
-		<button type = "button" class = "backButtons">Back</button>
-		<button type = "button" class = "nextButtons">Next</button>
-		</form>
-	</div>
-
-	<div id = "assignRoles" class = "hidden">
-		<h4>Distribute the cards as follows:</h4>
-		<form>
-
-		<br>
-		<button type = "button" class = "backButtons">Back</button>
-		<button type = "button" class = "nightButtons">Start the Night</button>
-		</form>
-	</div>
-
-	<div id = "day" class = "hidden">
-		<h4>Vote to kill someone</h4>
-
-		<div id = 'dayActions'>
+		<div id = "askNumberPlayers" class = "add-comment add-comment-velvet">
+			<div class = "form-inner">
+				<h4>Welcome to Mafia God Tool <a href = "www.github.com">v0.10</a></h4>
+				<form>
+					Number of Players: <input type="text" id="numberOfP"><br>
+				</form>
+		            <div class="buttons">
+		                <a href="#" class="btn btn-small nextButtons"><span>Next</span></a>
+		            </div>
+			</div>
 		</div>
-		<form>
 
-		<br>
+		<div id = "askPlayerNames" class = "hidden add-comment add-comment-velvet">
+			<div class = "form-inner">
+				<h4>Enter the names of all the players:</h4>
+				<form>
+				</form>
+				<div class="buttons-wrap">
+		            <div class="buttons">
+		                <a href="#" class="btn btn-small backButtons"><span>Back</span></a>
+		                <a href="#" class="btn btn-small nextButtons"><span>Next</span></a>
+		            </div>
+				</div>
+			</div>
+		</div>
 
-		<button type = "button" class = "nightButtons">Start the Night</button>
-		</form>
-	</div>
+		<div id = "selectRoles" class = "hidden add-comment add-comment-velvet">
+			<div class = "form-inner">
+			<h4>Pick the characters you want to play with</h4>
 
-	<div id = "night" class = "hidden", "night">
-		<h4>Take actions in the following order</h4>
-			<div id = "actions">
+			<form>
+
+				<label for="vampire">Vampire</label>
+				<input type = "checkbox" id = "vampire" value = "Vampire"><br>
+				<p class = "description">A moody villain that glitters under the sun. Bites other players to convert them to vampires or kill them at night</p>
+
+				<label for="werewolf">Werewolf</label>
+				<input type = "checkbox" id = "werewolf" value = "Werewolf"><br>
+				<p class = "description">A lonely villain that's half naked most of the time. Bites other players to convert them to werewolves or kill them at night</p>
+
+				<label for="bella">Bella</label>
+				<input type = "checkbox" id = "bella" value = "Bella"><br>
+				<p class = "description">Bella chooses a player to sleep with her at night. that player cannot be targetted by villains and batman, but villains would bite both Bella and her guest if they pay a visit to Bella.</p>
+
+				<label for="detective">Detective</label>
+				<input type = "checkbox" id = "detective" value = "Detective"><br>
+				<p class = "description">Detective chooses someone at night to check whether or not the target is a villain.</p>
+
+				<label for="batman">Batman</label>
+				<input type = "checkbox" id = "batman" value = "Batman"><br>
+				<p class = "description">Batman tries to kill someone at night. if batman succeeds, that person's role is also revealed. </p>
+
+				<label for="bieber">Bieber</label>
+				<input type = "checkbox" id = "bieber" value = "Bieber"><br>
+				<p class = "description">If Bieber is voted to death, bieber wins the game. </p>
+
+				<label for="doctor">Doctor</label>
+				<input type = "checkbox" id = "doctor" value = "Doctor"><br>
+				<p class = "description">Doctor can inject someone with medicine at night to prevent them being bitten by vampire or werewolf. However, if the good doctor injects someone two nights in a row, that person dies of overdose. </p>
 				
+				<label for="sue">Sue</label>
+				<input type = "checkbox" id = "sue" value = "Sue"><br>
+				<p class = "description">Sue is an angry person. If Sue dies, she kills someone. </p>
+
+				<label for="kirby">Kirby</label>
+				<input type = "checkbox" id = "kirby" value = "Kirby"><br>
+				<p class = "description">Kirby has the option at night to randomly change into a role of a dead person.</p>
+
+				<label for="luke">Luke</label>
+				<input type = "checkbox" id = "luke" value = "Luke"><br>
+				<p class = "description">Luke and Leia are sibling lovers. When one dies, so does the other.</p>
+
+				<label for="leia">Leia</label>
+				<input type = "checkbox" id = "leia" value = "Leia"><br>
+				<p class = "description">Luke and Leia are sibling lovers. When one dies, so does the other.</p>
+
+				<label for="littlefinger">Littlefinger</label>
+				<input type = "checkbox" id = "littlefinger" value = "Littlefinger"><br>
+				<p class = "description">Littlefinger is on the same side of the villains, but the villains don't know that.</p>
+			</form>
+	            <div class="buttons">
+	                <a href="#" class="btn btn-small backButtons"><span>Back</span></a>
+	                <a href="#" class="btn btn-small nextButtons"><span>Next</span></a>
+	            </div>
+			</div>
+		</div>
+
+		<div id = "assignRoles" class = "hidden add-comment add-comment-velvet">
+			<div class = "form-inner">
+			<h4>Distribute the cards as follows:</h4>
+			<form>
+
+			<br>
+			</form>
+
+	            <div class="buttons">
+	                <a href="#" class="btn btn-small backButtons"><span>Back</span></a>
+	                <a href="#" class="btn btn-small nightButtons"><span>Start</span></a>
+	            </div>
+			</div>			
+		</div>
+
+		<div id = "day" class = "hidden add-comment add-comment-velvet">
+			<div class = "form-inner">
+			<h4>Vote to kill someone</h4>
+
+			<div id = 'dayActions'>
+			</div>
+			<form>
+			</form>
+	            <div class="buttons">
+	                <a href="#" class="btn btn-small nightButtons"><span>Night</span></a>
+	            </div>
+			</div>	
+		</div>
+
+		<div id = "night" class = "hidden night add-comment add-comment-velvet">
+			<div class = "form-inner">
+			<h4>Take actions in the following order</h4>
+				<div id = "actions">
+					
+				</div>
+
+			<form>
+			</form>
+	            <div class="buttons">
+	                <a href="#" class="btn btn-small dayButtons"><span>Day</span></a>
+	            </div>
+			</div>	
+		</div>
+
+
+			<div id = "sueDay" class = "hidden add-comment add-comment-velvet">
+				<div class = "form-inner">
+					<h4>Sue died. Sue will now pick someone to take down with her</h4>
+						<div id = "sueActions">
+							
+						</div>
+
+					<form>
+
+					<br>
+
+					<button type = "button" class = "dayButtons">Resume</button>
+					</form>
+				</div>
 			</div>
 
-		<form>
+		</div>
 
-		<br>
-
-		<button type = "button" class = "dayButtons">Start the day</button>
-		</form>
+		<div id = 'log' class = "form-inner">
+			<h4>Game Log</h4>
+		</div>
 	</div>
 
-
-	<div id = "sueDay" class = "hidden">
-		<h4>Sue died. Sue will now pick someone to take down with her</h4>
-			<div id = "sueActions">
-				
-			</div>
-
-		<form>
-
-		<br>
-
-		<button type = "button" class = "dayButtons">Resume</button>
-		</form>
-	</div>
-
-</div>
-
-	<div id = 'log'>
-		<h4>Game Log</h4>
-	</div>
-</div>
-
+</body>
 <script src="jquery.js"></script>
 <script src="mafiaApp.js"></script>
 </html>
