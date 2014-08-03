@@ -365,7 +365,7 @@ input[type="text"]:focus{
     border-left: 1px solid #3C434D;
 }
 
-.form-inner{padding: 20px 30px;}
+.add-comment-velvet .form-inner{padding: 20px 30px;}
 
 .add-comment.add-comment-velvet.styled .field_text,
 .add-comment.add-comment-velvet.styled .field_select{
@@ -396,8 +396,8 @@ input[type="text"]:focus{
 
 
 #content {
-  width: 80% ;
-  margin-top: 50px;
+  width: 85% ;
+  margin-top: 40px;
   margin-left: auto ;
   margin-right: auto ;
 }
@@ -412,6 +412,9 @@ input[type="text"]:focus{
 @media screen and (max-width: 768px) {
     #main { width:100%; }
     #log { width:100%;}
+    .add-comment-velvet .form-inner{
+    padding: 10px 20px !important;
+  }
 }
 
 h4{

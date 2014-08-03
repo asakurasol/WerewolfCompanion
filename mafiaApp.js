@@ -29,21 +29,12 @@ Todo
 - add header
 - add footer
 - add css for warnings
+- fix github link,establish version control and shrink mobile padding
 ******/
 
 /******
 Finished Tasks
-- added basic description for each role
-- made css more responsive
-- If Luke is selected, Leia must be selected, and vice versa
-- When Luke dies, so does Leia, and vice versa
-- correct doctor overdose issue
-- change player role assignment to table instead of list
-- added kirby actions
-- added validation for player name (null and repeats)
-- validation for number of roles must equal to number of players
-- Must select at least 1 werewolf or 1 vampire
-- Werevampire kill batman/bieber even if there are rooms for conversion
+ - Added some CSS
 *******/
 
 //********Variables*******//
